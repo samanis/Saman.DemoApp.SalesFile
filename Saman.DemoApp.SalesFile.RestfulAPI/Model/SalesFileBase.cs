@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 
 namespace Saman.DemoApp.SalesFile.RestfulAPI.Model
@@ -18,6 +19,8 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Model
         public DateTime UploadedDateTime { get; set; }
         //public string[] FileLines { get; private set; }
         public abstract SalesFileType SalesFileType { get; }
+
+        [BsonId]
         public string FileName { get; set; }
 
         public abstract void Validate();
