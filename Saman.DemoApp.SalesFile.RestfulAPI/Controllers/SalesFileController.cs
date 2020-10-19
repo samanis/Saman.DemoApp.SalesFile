@@ -34,11 +34,14 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Controllers
                 throw ex;
             }
         }
-
-        [HttpGet]
-        public IActionResult GetFile()
+      
+        [HttpGet("{id}")]
+        public IActionResult GetFile(string id)
         {
-            return Ok("GetFile");
+            var retrievedFile = _appService.RetirveFile(id);
+            if (retrievedFile is null)
+                return NotFound();
+            return Ok(_appService.RetirveFile(id));
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure
 {
     public interface IFileRepository
     {
-        public void InsertFileContent(SalesFileBase salesFile);
+        public void InsertFileContent(CSVSalesFile salesFile);
+        public CSVSalesFile GetById(string id);
     }
 }

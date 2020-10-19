@@ -50,6 +50,10 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure
         {
             return$"{dateTime.ToString("yyyyMMddThhmmssfffff", CultureInfo.CreateSpecificCulture("en-ca"))}.csv";
         }
-       
+
+        public SalesFileBase RetirveFile(string id)
+        {
+            return _fileRepository.GetById(id);
+        }
     }
 }

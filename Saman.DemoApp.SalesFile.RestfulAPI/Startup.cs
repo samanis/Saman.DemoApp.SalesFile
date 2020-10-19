@@ -38,7 +38,7 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI
                     return result;
                 };
             });
-            services.AddSingleton<IFileRepository>(x => new MongoDBFileRepository(Configuration.GetConnectionString("MangoDB")));
+            services.AddSingleton<IFileRepository>(x => new MongoDBFileRepository(Configuration.GetConnectionString("MangoDB"),Configuration));
             services.AddSingleton<INewUploadedFileEventHandler, RabbitMQEventHandler>();
             services.AddSingleton<IAppService, AppService>();
         }
