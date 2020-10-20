@@ -3,6 +3,7 @@ using Saman.DemoApp.SalesFile.RestfulAPI.Model;
 using System;
 using System.Globalization;
 using System.IO;
+using System.Text;
 
 namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure
 {
@@ -38,7 +39,8 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure
         private static string ReadContentFromIFormFile(IFormFile formFile)
         {
             string fileContent;
-            using (var reader = new StreamReader(formFile.OpenReadStream()))
+           
+            using (var reader = new StreamReader(formFile.OpenReadStream(),Encoding.GetEncoding("iso-8859-1")))
             {
                 fileContent = reader.ReadToEnd();
             }
