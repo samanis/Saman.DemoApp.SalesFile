@@ -7,6 +7,6 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure
     public interface IAppService
     {
         public void HandleUploadedSalesFile(IFormFile formFile, DateTime uploadedDateTime);
-        public SalesFileBase RetirveFile(string id);
+        public SalesFileBase RetirveFile(int id);
     }
 }

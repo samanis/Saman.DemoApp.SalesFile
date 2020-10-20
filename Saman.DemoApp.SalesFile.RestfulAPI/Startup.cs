@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -38,9 +39,12 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI
                     return result;
                 };
             });
-            services.AddSingleton<IFileRepository>(x => new MongoDBFileRepository(Configuration.GetConnectionString("MangoDB"),Configuration));
-            services.AddSingleton<INewUploadedFileEventHandler, RabbitMQEventHandler>();
-            services.AddSingleton<IAppService, AppService>();
+            services.AddDbContext<CSVSalesFileDBContext>(options =>
+        options.UseSqlServer(
+            Configuration.GetConnectionString("SQLDB")));
+            services.AddScoped<IFileRepository<int>,SQLDBFileRepository>();
+            services.AddScoped<INewUploadedFileEventHandler, RabbitMQEventHandler>();
+            services.AddScoped<IAppService, AppService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

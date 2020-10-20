@@ -25,6 +25,8 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Model
 
         public abstract void Validate();
 
+        public int Id { get; set; }
+
         private void BasicValidation()
         {
             if (string.IsNullOrEmpty(FileContent.Trim()))

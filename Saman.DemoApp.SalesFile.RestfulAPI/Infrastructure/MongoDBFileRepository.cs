@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure
 {
-    public class MongoDBFileRepository : IFileRepository
+    public class MongoDBFileRepository : IFileRepository<string>
     {
         string _connectionString;
         MongoClient _dbClient;

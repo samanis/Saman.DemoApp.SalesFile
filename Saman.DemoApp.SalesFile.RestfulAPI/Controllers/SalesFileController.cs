@@ -36,7 +36,7 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Controllers
         }
       
         [HttpGet("{id}")]
-        public IActionResult GetFile(string id)
+        public IActionResult GetFile(int id)
         {
             var retrievedFile = _appService.RetirveFile(id);
             if (retrievedFile is null)

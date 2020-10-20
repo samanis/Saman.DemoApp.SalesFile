@@ -9,10 +9,10 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure
 {
     public class AppService : IAppService
     {
-        IFileRepository _fileRepository;
+        IFileRepository<int> _fileRepository;
         INewUploadedFileEventHandler _newUploadedFileEventHandler;
 
-        public AppService(IFileRepository fileRepository, INewUploadedFileEventHandler newUploadedFileEventHandler)
+        public AppService(IFileRepository<int> fileRepository, INewUploadedFileEventHandler newUploadedFileEventHandler)
         {
             _fileRepository = fileRepository ?? throw new ArgumentNullException(nameof(fileRepository));
             _newUploadedFileEventHandler = newUploadedFileEventHandler ?? throw new ArgumentNullException(nameof(newUploadedFileEventHandler));
@@ -53,7 +53,7 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure
             return$"{dateTime.ToString("yyyyMMddThhmmssfffff", CultureInfo.CreateSpecificCulture("en-ca"))}.csv";
         }
 
-        public SalesFileBase RetirveFile(string id)
+        public SalesFileBase RetirveFile(int id)
         {
             return _fileRepository.GetById(id);
         }
