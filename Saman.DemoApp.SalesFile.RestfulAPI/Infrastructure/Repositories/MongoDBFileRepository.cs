@@ -1,11 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure.Interfsaces;
 using Saman.DemoApp.SalesFile.RestfulAPI.Model;
 using System;
 using System.Collections.Generic;
 
-namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure
+namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure.Repositories
 {
     public class MongoDBFileRepository : IFileRepository<string>
     {
@@ -15,7 +16,7 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure
         IConfigurationSection _mongoDbConfigsection;
         IMongoDatabase _mongoDatabase;
         IMongoCollection<CSVSalesFile> _mongoCollection;
-       
+
         public MongoDBFileRepository(string connectionString, IConfiguration configuration)
         {
             try

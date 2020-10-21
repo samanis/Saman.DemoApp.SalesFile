@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure;
+using Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure.Interfsaces;
 
 namespace Saman.DemoApp.SalesFile.RestfulAPI.Controllers
 {
@@ -13,21 +13,26 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Controllers
     [ApiController]
     public class SalesFileController : ControllerBase
     {
-        IAppService _appService;
+        ISalesFileHandlerService _appService;
 
-        public SalesFileController(IAppService appService)
+        public SalesFileController(ISalesFileHandlerService appService)
         {
             _appService = appService ?? throw new ArgumentNullException(nameof(appService));
         }
 
         [HttpPost]
-        public IActionResult Upload()
+        public IActionResult UploadFile()
         {
             try
             {
                 IFormFile file = Request.Form.Files[0];
-                _appService.HandleUploadedSalesFile(file, DateTime.UtcNow);
-                return Ok();
+                if (file != null)
+                {
+                    _appService.HandleUploadedSalesFile(file, DateTime.UtcNow);
+                    return Created("", "sales file uploaded");
+                }
+                return BadRequest("Null request sent");
+               
             }
             catch (Exception ex)
             {

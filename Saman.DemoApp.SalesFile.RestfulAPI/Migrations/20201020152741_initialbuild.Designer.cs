@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure;
+using Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure.Repositories;
 
 namespace Saman.DemoApp.SalesFile.RestfulAPI.Migrations
 {
-    [DbContext(typeof(CSVSalesFileDBContext))]
+    [DbContext(typeof(SalesFileDBContext))]
     [Migration("20201020152741_initialbuild")]
     partial class initialbuild
     {

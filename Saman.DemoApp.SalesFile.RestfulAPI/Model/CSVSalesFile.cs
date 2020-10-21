@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Saman.DemoApp.SalesFile.RestfulAPI.Model
 {
-    public class CSVSalesFile : SalesFileBase
+    public class CSVSalesFile : UploadedSalesFile
     {
         public CSVSalesFile(string fileContent, DateTime uploadedDateTime, string fileName) : base(fileContent, uploadedDateTime, fileName)
         {

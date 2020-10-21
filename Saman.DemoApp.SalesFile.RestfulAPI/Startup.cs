@@ -14,11 +14,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure;
+using Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure.Interfsaces;
+using Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure.Repositories;
 
 namespace Saman.DemoApp.SalesFile.RestfulAPI
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,6 +32,15 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:4200",
+                                                          "http://www.contoso.com");
+                                  });
+            });
             services.AddControllers().ConfigureApiBehaviorOptions(options =>
             {
                 options.InvalidModelStateResponseFactory = context =>
@@ -39,12 +51,12 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI
                     return result;
                 };
             });
-            services.AddDbContext<CSVSalesFileDBContext>(options =>
+            services.AddDbContext<SalesFileDBContext>(options =>
         options.UseSqlServer(
             Configuration.GetConnectionString("SQLDB")));
             services.AddScoped<IFileRepository<int>,SQLDBFileRepository>();
             services.AddScoped<INewUploadedFileEventHandler, RabbitMQEventHandler>();
-            services.AddScoped<IAppService, AppService>();
+            services.AddScoped<ISalesFileHandlerService, SalesFileHandlerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +78,8 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI
                     });
                 });
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
 

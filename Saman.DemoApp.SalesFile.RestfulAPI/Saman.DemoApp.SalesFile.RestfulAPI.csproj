@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\ErrorController.cs" />
+    <Compile Remove="Infrastructure\Repositories\MongoDBFileRepository.cs" />
+    <Compile Remove="Infrastructure\SalesFileHandlerServiceBase.cs" />
+    <Compile Remove="Model\CSVSalesFile.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.9">
       <PrivateAssets>all</PrivateAssets>

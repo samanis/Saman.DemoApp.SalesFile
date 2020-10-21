@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure
+namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure.Interfsaces
 {
     public interface IFileRepository<T>
     {
-        public void InsertFileContent(CSVSalesFile salesFile);
-        public CSVSalesFile GetById(T id);
+        public void InsertFileContent(UploadedSalesFile salesFile);
+        public UploadedSalesFile GetById(T id);
     }
 }

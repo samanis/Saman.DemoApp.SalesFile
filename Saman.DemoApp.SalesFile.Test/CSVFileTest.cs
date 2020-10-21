@@ -11,7 +11,8 @@ namespace Saman.DemoApp.SalesFile.Test
         string _csvSaleString;
         string _fileName;
         DateTime _uploadDateTime;
-        CSVSalesFile _cvsSalesFile;
+        UploadedSalesFile uploadedSalesFile;
+        ISalesFileValidator salesFileValidator;
 
         public CSVFileTest()
         {
@@ -22,20 +23,21 @@ namespace Saman.DemoApp.SalesFile.Test
             }
             _fileName = $"{DateTime.UtcNow}.csv";
             _uploadDateTime = DateTime.UtcNow;
-            _cvsSalesFile = new CSVSalesFile(_csvSaleString, _uploadDateTime, _fileName);
+            salesFileValidator = new CSVSalesFileValidator();
+            uploadedSalesFile = new UploadedSalesFile(_csvSaleString, _uploadDateTime, _fileName, salesFileValidator,SalesFileType.CSV);
         }
 
         [Fact]
         public void File_Cant_Be_Empty()
         {
-            Exception exception = Assert.Throws<ArgumentException>(() => new CSVSalesFile(string.Empty, _uploadDateTime, _fileName));
+            Exception exception = Assert.Throws<ArgumentException>(() => new UploadedSalesFile(string.Empty, _uploadDateTime, _fileName, salesFileValidator, SalesFileType.CSV));
             Assert.Equal("File is empty or null", exception.Message);
         }
 
         [Fact]
         public void File_Should_Have_Header_And_Content()
         {
-            Exception exception = Assert.Throws<Exception>(() => new CSVSalesFile("DealNumber,CustomerName,DealershipName,Vehicle,Price,Date", _uploadDateTime, _fileName));
+            Exception exception = Assert.Throws<Exception>(() => new UploadedSalesFile("DealNumber,CustomerName,DealershipName,Vehicle,Price,Date", _uploadDateTime, _fileName, salesFileValidator, SalesFileType.CSV));
             Assert.Equal("CSV file has no content", exception.Message);
         }
 
@@ -43,28 +45,28 @@ namespace Saman.DemoApp.SalesFile.Test
         public void Ctor_Assigned_FileName_As_Expected()
         {
           
-            Assert.Equal(_fileName, _cvsSalesFile.FileName);
+            Assert.Equal(_fileName, uploadedSalesFile.FileName);
         }
 
         [Fact]
         public void Ctor_Assigned_FileContent_As_Expected()
         {
 
-            Assert.Equal(_csvSaleString, _cvsSalesFile.FileContent);
+            Assert.Equal(_csvSaleString, uploadedSalesFile.FileContent);
         }
 
         [Fact]
         public void Ctor_Assigned_UploadDateTime_As_Expected()
         {
 
-            Assert.Equal(_uploadDateTime, _cvsSalesFile.UploadedDateTime);
+            Assert.Equal(_uploadDateTime, uploadedSalesFile.UploadedDateTime);
         }
 
         [Fact]
         public void Ctor_Assigned_SalesFileType_As_Expected()
         {
 
-            Assert.Equal(SalesFileType.CSV, _cvsSalesFile.SalesFileType);
+            Assert.Equal(SalesFileType.CSV, uploadedSalesFile.SalesFileType);
         }
 
     }

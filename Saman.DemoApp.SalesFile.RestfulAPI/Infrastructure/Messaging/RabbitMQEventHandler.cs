@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
+using Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure.Interfsaces;
 using System;
 using System.Text;
 using System.Text.Json;
@@ -22,11 +23,8 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure
         {
             try
             {
-                var configSection = _configuration.GetSection("Messaging");
-                var factory = new ConnectionFactory() { HostName = configSection.GetSection("HostName").Value };
-                factory.UserName = configSection.GetSection("UserName").Value;
-                factory.Password = configSection.GetSection("Password").Value;
-                factory.VirtualHost = configSection.GetSection("VirtualHost").Value;
+                IConfigurationSection configSection = _configuration.GetSection("Messaging"); ;
+                var factory = CreateConnectionFactory(configSection);
                 using (var connection = factory.CreateConnection())
                 using (var channel = connection.CreateModel())
                 {
@@ -42,6 +40,15 @@ namespace Saman.DemoApp.SalesFile.RestfulAPI.Infrastructure
 
                 throw new ApplicationException("Error in messaging",ex);
             }
+        }
+
+        private ConnectionFactory CreateConnectionFactory(IConfigurationSection configSection)
+        {
+            ConnectionFactory factory = new ConnectionFactory() { HostName = configSection.GetSection("HostName").Value };
+            factory.UserName = configSection.GetSection("UserName").Value;
+            factory.Password = configSection.GetSection("Password").Value;
+            factory.VirtualHost = configSection.GetSection("VirtualHost").Value;
+            return factory;
         }
     }
 }
